@@ -1,6 +1,6 @@
 # Ansible Role: cfs
 
-[![Build Status]](https://jenkins.io)
+[![Build Status](https://api.travis-ci.org/JeremyVV/ansible-role-csf.svg?branch=master)](https://travis-ci.org/JeremyVV/ansible-role-csf)
 
 Installs [role template](https://www.configserver.com/cp/csf.html). CSF is a Stateful Packet Inspection (SPI) firewall, Login/Intrusion Detection and Security application for Linux servers.
 
