@@ -1,23 +1,8 @@
----
 sudo: required
 
 env:
   - distribution: centos
     version: 7
-#  - distribution: fedora
-#    version: 26
-#  - distribution: fedora
-#    version: 25
-#  - distribution: fedora
-#    version: 24
-#  - distribution: ubuntu
-#    version: xenial
-#  - distribution: ubuntu
-#    version: trusty
-#  - distribution: debian
-#    version: stretch
-#  - distribution: debian
-#    version: jessie
 
 services:
   - docker
@@ -36,4 +21,4 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
-- 'sudo docker rm -f "$(cat ${container_id})"'
+  - 'sudo docker rm -f "$(cat ${container_id})"'
