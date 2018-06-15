@@ -1,0 +1,82 @@
+- name: check if csf exists
+  stat:
+    path: /usr/sbin/csf
+  register: csf_installed
+
+- name: install dependancy packages
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - wget
+    - perl-libwww-perl
+    - perl-Time-HiRes
+    - perl
+    - unzip
+    - net-tools
+    - perl-GDGraph
+    - perl-LWP-Protocol-https
+  tags: packages
+
+#- name: download csf tar ball
+#  get_url:
+#    url: https://download.configserver.com/csf.tgz
+#    dest: /tmp/csf.tgz
+
+- name: make /opt/csf drectory
+  file:
+    path: /opt/csf
+    state: directory
+    mode: 0755
+
+- name: download and decompress csf
+  unarchive: 
+    src: https://download.configserver.com/csf.tgz
+    dest: /opt
+    remote_src: yes
+  when: csf_installed.stat.exists == False
+
+- name: stop and disable firewalld
+  systemd: 
+    name: firewalld
+    state: stopped
+    enabled: no
+  ignore_errors: yes
+
+- name: install iptables
+  yum:
+    pkg: iptables-services
+    state: installed
+
+- name: Enable and start iptables
+  systemd:
+    name: iptables
+    state: started
+    enabled: yes
+
+- name: Enable and start iptables v6
+  systemd:
+    name: ip6tables
+    state: started
+    enabled: yes
+
+- name: Install csf
+  shell: /opt/csf/install.sh
+  args:
+    chdir: /opt/csf
+  when: csf_installed.stat.exists == False
+
+
+- name: Install csf.conf
+  template:
+    src: csf.conf.j2
+    dest: /etc/csf/csf.conf
+    owner: root
+    group: root
+    mode: "u=rw"
+  notify: restart csf
+
+- name: enable and start csf
+  systemd:
+    name: csf
+    state: started
+    enabled: yes
+
