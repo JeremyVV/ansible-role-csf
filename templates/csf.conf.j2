@@ -307,7 +307,7 @@ SYSLOG_CHECK = "0"
 # should be used with caution as it would mean that IP's allowed through the
 # firewall from infected PC's could launch attacks on the server that lfd
 # would ignore
-IGNORE_ALLOW = "0"
+IGNORE_ALLOW = "{{ csf_ignore_allow }}"
 
 # Enable the following option if you want to apply strict iptables rules to DNS
 # traffic (i.e. relying on iptables connection tracking). Enabling this option

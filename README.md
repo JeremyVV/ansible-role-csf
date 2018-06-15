@@ -40,6 +40,7 @@ csf_ct_limit:        "100"
 csf_ct_permanent:    "1"
 csf_lf_alert_to:     ""
 csf_cc_deny:         ""
+csf_ignore_allow:    "0"
 ```
 
 ## Dependencies

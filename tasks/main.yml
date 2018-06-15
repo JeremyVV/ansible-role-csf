@@ -74,6 +74,16 @@
     mode: "u=rw"
   notify: restart csf
 
+- name: Copy csf.ignore
+  template:
+    src: csf.ignore.j2
+    dest: /etc/csf/csf.ignore
+    owner: root
+    group: root
+    mode: "u=rw"
+  notify: restart csf
+
+
 - name: enable and start csf
   systemd:
     name: csf
